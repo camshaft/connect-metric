@@ -1,20 +1,22 @@
 /**
  * Module dependencies
  */
-var metric = require("metric-log")
-  , crypto = require('crypto');
+
+var metric = require('metric-log');
+var crypto = require('crypto');
 
 /**
  * Defines
  */
+
 var TIME_DAY = 60 * 60 * 24;
 
 module.exports = function(context, options) {
   context = context || {};
   options = options || {};
 
-  var root = metric.context(context)
-    , requestIDHeader = options.request_id || 'x-request-id';
+  var root = metric.context(context);
+  var requestIDHeader = options.request_id || 'x-request-id';
 
   return function metrics(req, res, next) {
     var data = {};
@@ -25,7 +27,7 @@ module.exports = function(context, options) {
     // Create a new context for the request
     req.metric = metric.context(data).use(root);
 
-    // Allow the app to "login" a user with a pseudo-session
+    // Allow the app to 'login' a user with a pseudo-session
     req.metric.login = function(id) {
       data.session = userSession(id || (req.user || {}).id);
       return this;
@@ -33,17 +35,17 @@ module.exports = function(context, options) {
 
     next();
   }
-};
+}
 
 function userSession (id) {
   if(!id) return null;
 
   var hash = crypto.createHash('md5');
   // Create a session id by hashing the id
-  hash.update(""+id);
+  hash.update('' + id);
   // And the day
   var time = Date.now()/1000;
-  hash.update(""+(time - (time % TIME_DAY)));
+  hash.update('' + (time - (time % TIME_DAY)));
   // Formatted as hex
   return hash.digest('hex');
 }

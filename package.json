@@ -1,6 +1,6 @@
 {
   "name": "connect-metric",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "Middleware that exposes metric for logging in the context of a user",
   "main": "index.js",
   "scripts": {
@@ -10,12 +10,11 @@
     "type": "git",
     "url": "https://github.com/CamShaft/connect-metric.git"
   },
-  "author": "Cameron Bytheway <cameron@nujii.com>",
+  "author": "Cameron Bytheway <cameron@theflokk.com>",
   "license": "MIT",
   "readmeFilename": "README.md",
-  "gitHead": "e74671764dbb7ee26c051d8d6ccb704c60fc843a",
   "dependencies": {
-    "metric-log": "~0.2.0"
+    "metric-log": "~1.0.0"
   },
   "devDependencies": {
     "should": "~1.2.2",
