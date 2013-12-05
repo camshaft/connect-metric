@@ -4,6 +4,8 @@
 
 var metric = require('metric-log');
 var crypto = require('crypto');
+var cluster = require('cluster');
+var os = require('os');
 
 /**
  * Defines
@@ -14,6 +16,8 @@ var TIME_DAY = 60 * 60 * 24;
 module.exports = function(context, options) {
   context = context || {};
   options = options || {};
+
+  context.source = formatSource(context.source);
 
   var root = metric.context(context);
   var requestIDHeader = options.request_id || 'x-request-id';
@@ -49,3 +53,9 @@ function userSession (id) {
   // Formatted as hex
   return hash.digest('hex');
 }
+
+function formatSource(source) {
+  source = source || os.hostname().toLowerCase();
+  var id = cluster.isWorker ? cluster.worker.id + '.' : '';
+  return id + source;
+};

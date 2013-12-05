@@ -2,6 +2,8 @@ var should = require('should');
 var log = require('metric-log');
 var connect = require('connect');
 var request = require('supertest');
+var hostname = require('os').hostname().toLowerCase();
+var hostnameRe = new RegExp('source=' + hostname);
 
 var app = connect();
 
@@ -41,6 +43,7 @@ describe('req-metric', function(){
         str.should.match(/measure#response=456/);
         str.should.match(/request_id=1234/);
         str.should.not.match(/session=/);
+        str.should.match(hostnameRe);
         done();
       });
   });
@@ -55,6 +58,7 @@ describe('req-metric', function(){
         str.should.match(/request_id=1235/);
         str.should.match(/testing=123/);
         str.should.not.match(/session=/);
+        str.should.match(hostnameRe);
         done();
       });
   });
@@ -67,6 +71,7 @@ describe('req-metric', function(){
         if(err) done(err);
         str.should.match(/measure#response=456/);
         str.should.match(/request_id=1237/);
+        str.should.match(hostnameRe);
         done();
       });
   });
@@ -80,6 +85,7 @@ describe('req-metric', function(){
         str.should.match(/measure#response=456/);
         str.should.match(/request_id=1236/);
         str.should.match(/session=/);
+        str.should.match(hostnameRe);
         done();
       });
   });
