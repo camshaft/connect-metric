@@ -58,4 +58,4 @@ function formatSource(source) {
   source = source || os.hostname().toLowerCase();
   var id = cluster.isWorker ? cluster.worker.id + '.' : '';
   return id + source;
-};
+}
